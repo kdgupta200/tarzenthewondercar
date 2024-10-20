@@ -55,7 +55,7 @@ def run_group_updater():
             time.sleep(1)  # Wait for 10 seconds before the next iteration
         except Exception as e:
             print(f"Error: {e}")
-            time.sleep(900)
+            time.sleep(0)
 
 # Flask route to keep the web service alive
 @app.route('/')
