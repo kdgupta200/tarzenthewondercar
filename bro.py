@@ -25,7 +25,7 @@ def read_group_data(file_path):
                 "cid": cid,
                 "lid": lid,
                 "tags": "",
-                "gdesc": '''<strong><font color="#FF1493" size="4">All Type Videos🥵🤤link👇</font><br><br><font color="blue" size="3">👉🏻 https://dub.sh/xxcvideo 👈</font></strong><br><br>Copy and open above URL in Browser to watch videos'''
+                "gdesc": '''<strong><font color="#FF1493" size="4">Aʟʟ Tʏᴘᴇ Vɪᴅᴇᴏs🥵🤤ʟɪɴᴋ👇</font><br><br><font color="blue" size="3">👉🏻 https://dub.sh/xxcvideo 👈</font></strong><br><br>Cᴏᴘʏ ᴀɴᴅ ᴏᴘᴇɴ ᴀʙᴏᴠᴇ URL ɪɴ Bʀᴏᴡsᴇʀ ᴛᴏ ᴡᴀᴛᴄʜ ᴠɪᴅᴇᴏs'''
             })
     return groups
 
