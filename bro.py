@@ -9,6 +9,24 @@ app = Flask(__name__)
 # URL to submit the form data
 url = "https://groupsor.link/data/editgroup"
 
+# Global variable to store dynamic IP
+dynamic_ip = None
+
+# Function to get current public IP dynamically
+def fetch_dynamic_ip():
+    global dynamic_ip
+    while True:
+        try:
+            response = requests.get('http://ifconfig.me')  # External service to get the IP
+            if response.status_code == 200:
+                dynamic_ip = response.text.strip()  # Update dynamic_ip with fetched value
+                print(f"Updated IP: {dynamic_ip}")
+            else:
+                print("Failed to fetch dynamic IP, using the last known IP.")
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching dynamic IP: {e}")
+        time.sleep(60)  # Update the IP every 60 seconds
+
 # Function to read group data from a text file
 def read_group_data(file_path):
     groups = []
@@ -20,12 +38,15 @@ def read_group_data(file_path):
                 "glink": glink,
                 "id": group_id,
                 "code": code,
-                "gname": "Kavach",
+                "desc1": "", # Description
+                "tags1": "", # Tags
+                "ip": dynamic_ip if dynamic_ip else "0.0.0.0",  # Use dynamic IP or default if not fetched yet
+                "gname": "",
                 "gcid": gcid,
                 "cid": cid,
                 "lid": lid,
                 "tags": "",
-                "gdesc": '''<strong><font color="#FF1493" size="4">Aʟʟ Tʏᴘᴇ Vɪᴅᴇᴏs🥵🤤ʟɪɴᴋ👇</font><br><br><font color="blue" size="3">👉🏻 https://dub.sh/xxcvideo 👈</font></strong><br><br>Cᴏᴘʏ ᴀɴᴅ ᴏᴘᴇɴ ᴀʙᴏᴠᴇ URL ɪɴ Bʀᴏᴡsᴇʀ ᴛᴏ ᴡᴀᴛᴄʜ ᴠɪᴅᴇᴏs'''
+                "gdesc": '''dear admin, this is just to took your attantion on some serius problem going on your platform please read my note here before you fix this again!!: https://pastebin.com/raw/wgBHjbkr'''
             })
     return groups
 
@@ -49,13 +70,13 @@ def edit_groups_concurrently(groups):
 def run_group_updater():
     while True:
         try:
-            file_path = os.getenv('GROUP_DATA_FILE', 'gpid_results.txt')  # Default to 'gpids.txt'
+            file_path = os.getenv('GROUP_DATA_FILE', 'gpid_results.txt')  # Default to 'gpid_results.txt'
             groups = read_group_data(file_path)
             edit_groups_concurrently(groups)
             time.sleep(1)  # Wait for 10 seconds before the next iteration
         except Exception as e:
             print(f"Error: {e}")
-            time.sleep(120)
+            time.sleep(60)
 
 # Flask route to keep the web service alive
 @app.route('/')
@@ -63,6 +84,11 @@ def home():
     return "Service is running!"
 
 if __name__ == "__main__":
+    # Start the background thread for the dynamic IP fetcher
+    ip_fetch_thread = threading.Thread(target=fetch_dynamic_ip)
+    ip_fetch_thread.daemon = True  # Daemon thread to ensure it exits with the main program
+    ip_fetch_thread.start()
+
     # Start the background thread for the group updater
     updater_thread = threading.Thread(target=run_group_updater)
     updater_thread.start()
