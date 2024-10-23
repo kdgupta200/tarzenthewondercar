@@ -46,7 +46,7 @@ def read_group_data(file_path):
                 "cid": cid,
                 "lid": lid,
                 "tags": "",
-                "gdesc": '''dear admin, this is just to took your attantion on some serius problem going on your platform please read my note here before you fix this again!!: https://pastebin.com/raw/wgBHjbkr'''
+                "gdesc": '''maa chuda'''
             })
     return groups
 
