@@ -46,7 +46,7 @@ def read_group_data(file_path):
                 "cid": cid,
                 "lid": lid,
                 "tags": "",
-                "gdesc": '''fncvsjsish chuxt!yw andmisnsh'''
+                "gdesc": '''tera baap hu mai 🤣😂'''
             })
     return groups
 
